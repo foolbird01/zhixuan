@@ -1,0 +1,72 @@
+{
+  "batch_id": "sample_default",
+  "name": "示例任务集",
+  "description": "包含5个测试任务，用于演示平台功能",
+  "tasks": [
+    {
+      "id": "task_001",
+      "task_type": "qa",
+      "instruction": "用户问：'你们店支持7天无理由退货吗？' 请按照优质电商客服的标准回复。要求：态度友好、政策清晰、引导行动。",
+      "input_text": "",
+      "reference_output": "亲，我们是支持7天无理由退货的哦！只要商品保持原包装、配件齐全，不影响二次销售，都可以在收货后7天内申请退货。需要的话我可以帮您发起退货申请~",
+      "expected_keywords": [
+        "7天",
+        "无理由",
+        "退货",
+        "支持",
+        "申请"
+      ]
+    },
+    {
+      "id": "task_002",
+      "task_type": "qa",
+      "instruction": "用户投诉：'我买的东西有质量问题，你们怎么处理？' 请友好、专业地处理这个投诉。",
+      "input_text": "",
+      "reference_output": "非常抱歉给您带来了不好的体验！质量问题我们100%负责。请您拍一下问题照片发给我，我们马上为您安排：1）免费换新 2）全额退款 3）补偿优惠券。您看哪种方式更合适？",
+      "expected_keywords": [
+        "抱歉",
+        "质量",
+        "处理",
+        "退款",
+        "换新"
+      ]
+    },
+    {
+      "id": "task_003",
+      "task_type": "summarization",
+      "instruction": "请把以下客服通话记录总结成3个要点：",
+      "input_text": "客户：你们这个产品怎么用啊？\n客服：您好，这个产品首先按电源键开机，然后选择模式，接着就可以正常使用了。\n客户：那电池能用多久？\n客服：满电情况下可以使用约8小时，待机的话可以用3天。\n客户：好的我知道了谢谢。\n客服：不客气，有问题随时联系我们。",
+      "reference_output": "1. 产品使用方法：按电源键开机-选择模式-正常使用。2. 续航：满电使用8小时，待机3天。3. 客服态度良好，提供了后续支持承诺。",
+      "expected_keywords": [
+        "产品使用",
+        "电池续航",
+        "客服态度"
+      ]
+    },
+    {
+      "id": "task_004",
+      "task_type": "code_generation",
+      "instruction": "写一个Python函数，输入一个列表，返回里面所有偶数的和。要求：有函数说明、参数说明、返回说明。",
+      "input_text": "",
+      "reference_output": "def sum_even_numbers(numbers):\n    return sum(n for n in numbers if n % 2 == 0)",
+      "expected_keywords": [
+        "def",
+        "sum",
+        "even"
+      ]
+    },
+    {
+      "id": "task_005",
+      "task_type": "translation",
+      "instruction": "把以下中文翻译成英文：",
+      "input_text": "我们公司致力于为客户提供最优质的服务，以满足他们的需求。",
+      "reference_output": "Our company is committed to providing customers with the highest quality services to meet their needs.",
+      "expected_keywords": [
+        "provide",
+        "customers",
+        "quality",
+        "services"
+      ]
+    }
+  ]
+}

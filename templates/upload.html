@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传任务 - 智选</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🧠 智选 - AI模型选型平台</div>
+            <div class="nav-links">
+                <a href="/">首页</a>
+                <a href="/upload">上传任务</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>📤 上传任务样本</h1>
+            <p>上传您的业务场景任务，或直接使用示例任务</p>
+        </div>
+
+        <!-- 步骤1：上传任务文件 -->
+        <div class="card" id="upload-section">
+            <h3>第一步：上传任务文件（JSON格式）</h3>
+            <div class="upload-area" id="upload-area">
+                <input type="file" id="file-input" accept=".json" hidden>
+                <div class="upload-icon">📁</div>
+                <p>点击或拖拽文件到这里</p>
+                <p class="hint">支持 JSON 格式，包含 "tasks" 字段</p>
+            </div>
+            <div class="file-info" id="file-info" style="display: none;">
+                <span class="file-name" id="file-name"></span>
+                <span class="file-size" id="file-size"></span>
+                <button class="btn btn-small" id="clear-file">清除</button>
+            </div>
+        </div>
+
+        <!-- 步骤2：选择模型 -->
+        <div class="card" id="model-section">
+            <h3>第二步：选择要评估的模型</h3>
+            <p class="hint">提示：选择3-5个模型对比效果最佳</p>
+            <div class="model-selection" id="model-selection">
+                <!-- 动态加载模型列表 -->
+            </div>
+            <div class="select-actions">
+                <button class="btn btn-small" id="select-all">全选</button>
+                <button class="btn btn-small" id="deselect-all">全不选</button>
+            </div>
+        </div>
+
+        <!-- 步骤3：高级设置 -->
+        <div class="card" id="advanced-section">
+            <h3>第三步：高级设置（可选）</h3>
+            <div class="form-group">
+                <label>评估维度权重：</label>
+                <div class="weight-sliders">
+                    <div>
+                        <span>成本权重：</span>
+                        <input type="range" id="cost-weight" min="0" max="100" value="30">
+                        <span id="cost-weight-value">30%</span>
+                    </div>
+                    <div>
+                        <span>速度权重：</span>
+                        <input type="range" id="speed-weight" min="0" max="100" value="20">
+                        <span id="speed-weight-value">20%</span>
+                    </div>
+                    <div>
+                        <span>质量权重：</span>
+                        <input type="range" id="quality-weight" min="0" max="100" value="50">
+                        <span id="quality-weight-value">50%</span>
+                    </div>
+                </div>
+                <p class="hint">提示：权重总和需为100%</p>
+            </div>
+        </div>
+
+        <!-- 提交按钮 -->
+        <div class="submit-section">
+            <button class="btn btn-primary btn-large" id="start-evaluation" disabled>
+                开始评估
+            </button>
+            <p class="hint" id="submit-hint">请先上传任务文件并选择至少一个模型</p>
+        </div>
+
+        <!-- 进度显示 -->
+        <div class="card" id="progress-section" style="display: none;">
+            <h3>评估进度</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-text" id="progress-text">准备中...</p>
+            
+            <!-- 评估细节面板 -->
+            <div id="eval-detail-panel" style="margin-top: 16px; border-top: 1px solid #eee; padding-top: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                    <span style="font-weight: 600; font-size: 14px;">评估详情</span>
+                    <label style="display: flex; align-items: center; gap: 4px; font-size: 13px; cursor: pointer;">
+                        <input type="checkbox" id="toggle-detail" checked> 显示细节
+                    </label>
+                </div>
+                <div id="eval-detail-content">
+                    <div id="detail-stage" style="font-size: 13px; color: #555; margin-bottom: 6px;"></div>
+                    <div id="detail-task-info" style="font-size: 13px; color: #333; margin-bottom: 6px;"></div>
+                    <div id="detail-model-status" style="font-size: 12px;"></div>
+                    <div id="detail-log" style="max-height: 200px; overflow-y: auto; background: #f8f9fa; border-radius: 6px; padding: 8px; font-family: monospace; font-size: 12px; line-height: 1.6; margin-top: 8px;"></div>
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" id="view-report" style="display: none; margin-top: 12px;">
+                查看报告
+            </button>
+        </div>
+
+        <!-- 示例任务 -->
+        <div class="card">
+            <h3>不想上传？使用示例任务</h3>
+            <p>我们准备了10个客服场景的示例任务，您可以直接使用来体验平台功能。</p>
+            <button class="btn btn-secondary" id="use-sample">使用示例任务</button>
+        </div>
+    </div>
+
+    <script src="/static/main.js"></script>
+</body>
+</html>

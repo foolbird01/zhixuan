@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+*.log
+.idea/
+reports/
+test_*.py
+*.log
+*.md
+

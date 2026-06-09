@@ -1,0 +1,486 @@
+/* ========================================
+   智选平台 - 样式文件
+   就像餐厅的"装修方案"
+   决定了网站看起来是什么风格
+   ======================================== */
+
+/* ---------- 基础样式 ---------- */
+* {
+    margin: 0;                /* 去掉所有元素默认的"外边距" */
+    padding: 0;               /* 去掉所有元素默认的"内边距" */
+    box-sizing: border-box;    /* 让宽度计算更直观（包含padding和border） */
+}
+
+body {
+    font-family: "Microsoft YaHei", "SimHei", sans-serif;  /* 用微软雅黑字体（中文清晰） */
+    background: #f5f7fa;       /* 背景色：浅灰色（护眼） */
+    color: #333;               /* 文字颜色：深灰色（不是纯黑） */
+    line-height: 1.6;         /* 行高：1.6倍（阅读舒适） */
+}
+
+/* ---------- 导航栏 ---------- */
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  /* 渐变色背景 */
+    color: white;               /* 文字颜色：白色 */
+    padding: 15px 0;         /* 上下内边距15px，左右0 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* 阴影效果（让导航栏"浮"起来） */
+    position: sticky;          /* 粘性定位：滚动时固定在顶部 */
+    top: 0;                   /* 固定在顶部 */
+    z-index: 1000;           /* 层级：确保在最上层 */
+}
+
+.navbar .container {
+    display: flex;            /* 弹性布局：让logo和链接横向排列 */
+    justify-content: space-between;  /* 两端对齐（logo在左，链接在右） */
+    align-items: center;      /* 垂直居中 */
+}
+
+.navbar .logo {
+    font-size: 20px;         /* 字体大小 */
+    font-weight: bold;        /* 字体加粗 */
+}
+
+.navbar .nav-links a {
+    color: white;             /* 链接颜色：白色 */
+    text-decoration: none;    /* 去掉下划线 */
+    margin-left: 20px;       /* 左边距20px（链接之间有间隔） */
+    padding: 8px 16px;      /* 内边距（让点击区域更大） */
+    border-radius: 20px;     /* 圆角（变成胶囊形状） */
+    transition: background 0.3s;  /* 过渡动画：鼠标悬停时背景色渐变 */
+}
+
+.navbar .nav-links a:hover {
+    background: rgba(255,255,255,0.2);  /* 鼠标悬停：半透明白色背景 */
+}
+
+/* ---------- 容器 ---------- */
+.container {
+    max-width: 1200px;       /* 最大宽度：1200px（大屏幕居中显示） */
+    margin: 0 auto;          /* 上下边距0，左右自动（居中） */
+    padding: 0 20px;        /* 左右内边距20px（小屏幕时有留白） */
+}
+
+/* ---------- 英雄区域（首页大图）---------- */
+.hero {
+    text-align: center;       /* 文字居中 */
+    padding: 80px 20px;     /* 上下内边距80px（留出大量空白） */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  /* 渐变背景 */
+    color: white;             /* 文字颜色：白色 */
+    border-radius: 0 0 20px 20px;  /* 底部圆角（像卡片一样） */
+    margin-bottom: 40px;     /* 下方外边距40px */
+}
+
+.hero h1 {
+    font-size: 48px;         /* 大标题：48px（很醒目） */
+    margin-bottom: 20px;     /* 下方留白20px */
+}
+
+.hero .subtitle {
+    font-size: 18px;         /* 副标题：18px */
+    opacity: 0.9;           /* 透明度90%（稍微暗一点） */
+    margin-bottom: 30px;     /* 下方留白30px */
+}
+
+.hero .cta-buttons {
+    display: flex;            /* 弹性布局：按钮横向排列 */
+    gap: 15px;              /* 按钮之间的间隔15px */
+    justify-content: center;  /* 居中显示 */
+}
+
+/* ---------- 按钮样式 ---------- */
+.btn {
+    display: inline-block;    /* 行内块级元素（可以设置宽高，又不独占一行） */
+    padding: 12px 30px;     /* 内边距（让按钮够大，好点击） */
+    border-radius: 25px;     /* 圆角25px（胶囊形状） */
+    text-decoration: none;    /* 去掉下划线 */
+    font-weight: bold;        /* 字体加粗 */
+    transition: all 0.3s;   /* 过渡动画：所有属性渐变（0.3秒） */
+    cursor: pointer;          /* 鼠标样式：手型） */
+    border: none;             /* 去掉边框 */
+    font-size: 16px;         /* 字体大小 */
+}
+
+.btn-primary {
+    background: white;       /* 主按钮：白色背景 */
+    color: #667eea;         /* 文字颜色：紫色） */
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);  /* 鼠标悬停：向上移动2px（悬浮效果） */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);  /* 阴影（让按钮"浮"起来） */
+}
+
+.btn-secondary {
+    background: transparent;  /* 次要按钮：透明背景 */
+    color: white;             /* 文字颜色：白色 */
+    border: 2px solid white; /* 边框：2px白色实线 */
+}
+
+.btn-secondary:hover {
+    background: white;       /* 鼠标悬停：白色背景 */
+    color: #667eea;         /* 文字颜色：紫色 */
+}
+
+.btn-large {
+    padding: 15px 40px;     /* 大按钮：更大的内边距 */
+    font-size: 18px;         /* 字体更大 */
+}
+
+.btn-small {
+    padding: 8px 16px;     /* 小按钮 */
+    font-size: 14px;         /* 字体小一点 */
+}
+
+/* ---------- 功能卡片 ---------- */
+.features {
+    padding: 60px 0;        /* 上下内边距60px */
+}
+
+.features h2 {
+    text-align: center;       /* 标题居中 */
+    font-size: 32px;         /* 字体大小 */
+    margin-bottom: 40px;     /* 下方留白40px */
+}
+
+.feature-grid {
+    display: grid;           /* 网格布局（像表格一样对齐） */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  /* 响应式：自动调整列数 */
+    gap: 30px;              /* 卡片之间的间隔30px */
+}
+
+.feature-card {
+    background: white;       /* 卡片背景：白色 */
+    padding: 30px;           /* 内边距30px */
+    border-radius: 12px;     /* 圆角12px */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);  /* 阴影（微微浮起） */
+    text-align: center;       /* 文字居中 */
+    transition: transform 0.3s;  /* 过渡动画：变换效果 */
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);  /* 鼠标悬停：向上移动5px */
+}
+
+.feature-icon {
+    font-size: 48px;         /* 图标大小 */
+    margin-bottom: 20px;     /* 下方留白 */
+}
+
+.feature-card h3 {
+    font-size: 20px;         /* 卡片标题大小 */
+    margin-bottom: 15px;     /* 下方留白 */
+    color: #667eea;         /* 文字颜色：紫色 */
+}
+
+/* ---------- 工作流程 ---------- */
+.work-flow-section {
+    padding: 60px 0;        /* 上下内边距60px */
+}
+
+.work-flow {
+    display: flex;            /* 弹性布局：横向排列 */
+    align-items: center;      /* 垂直居中 */
+    justify-content: center;  /* 水平居中 */
+    gap: 20px;              /* 元素之间间隔20px */
+    flex-wrap: wrap;         /* 换行（小屏幕时自动换行） */
+}
+
+.work-flow-step {
+    background: white;       /* 步骤卡片：白色背景 */
+    padding: 30px;           /* 内边距 */
+    border-radius: 12px;     /* 圆角 */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);  /* 阴影 */
+    text-align: center;       /* 文字居中 */
+    flex: 1;                 /* 弹性：平均分配宽度 */
+    min-width: 200px;        /* 最小宽度200px */
+    max-width: 250px;        /* 最大宽度250px */
+}
+
+.step-number {
+    display: inline-block;    /* 行内块级（可以设置宽高） */
+    width: 40px;             /* 宽度40px（正圆形） */
+    height: 40px;            /* 高度40px */
+    background: #667eea;     /* 背景色：紫色 */
+    color: white;             /* 文字颜色：白色 */
+    border-radius: 50%;       /* 圆角50%（变成圆形） */
+    line-height: 40px;       /* 行高等于高度（文字垂直居中） */
+    font-weight: bold;        /* 字体加粗 */
+    margin-bottom: 15px;     /* 下方留白 */
+}
+
+.work-flow-arrow {
+    font-size: 24px;         /* 箭头大小 */
+    color: #667eea;         /* 箭头颜色：紫色 */
+    font-weight: bold;        /* 加粗 */
+}
+
+/* ---------- 卡片（通用）---------- */
+.card {
+    background: white;       /* 卡片背景：白色 */
+    padding: 30px;           /* 内边距30px */
+    border-radius: 12px;     /* 圆角12px */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);  /* 阴影 */
+    margin-bottom: 20px;     /* 下方外边距20px */
+}
+
+.card h3 {
+    font-size: 20px;         /* 卡片标题大小 */
+    margin-bottom: 20px;     /* 下方留白20px */
+    padding-bottom: 10px;    /* 下方内边距10px */
+    border-bottom: 3px solid #667eea;  /* 下方边框：3px紫色实线（装饰） */
+    color: #333;             /* 文字颜色 */
+}
+
+/* ---------- 表单元素 ---------- */
+.form-group {
+    margin-bottom: 20px;     /* 表单项之间留白20px */
+}
+
+.form-group label {
+    display: block;          /* 标签独占一行 */
+    margin-bottom: 8px;      /* 下方留白8px */
+    font-weight: bold;        /* 加粗 */
+    color: #555;             /* 文字颜色：深灰 */
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+    width: 100%;            /* 宽度占满父容器 */
+    padding: 12px;           /* 内边距12px */
+    border: 1px solid #ddd; /* 边框：1px浅灰色实线 */
+    border-radius: 6px;      /* 圆角6px */
+    font-size: 16px;         /* 字体大小 */
+    transition: border-color 0.3s;  /* 过渡动画：边框颜色渐变 */
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;           /* 去掉默认的聚焦轮廓 */
+    border-color: #667eea;  /* 聚焦时边框变紫色 */
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);  /* 外发光效果 */
+}
+
+/* ---------- 上传区域 ---------- */
+.upload-area {
+    border: 2px dashed #ddd;  /* 边框：2px虚线（像拖拽区） */
+    border-radius: 12px;     /* 圆角 */
+    padding: 60px 20px;     /* 内边距（让区域够大） */
+    text-align: center;       /* 文字居中 */
+    cursor: pointer;          /* 鼠标样式：手型 */
+    transition: all 0.3s;   /* 过渡动画 */
+    background: #f8f9ff;    /* 背景色：淡紫色 */
+}
+
+.upload-area:hover {
+    border-color: #667eea;  /* 鼠标悬停：边框变紫色 */
+    background: #f0f2ff;    /* 背景色变深 */
+}
+
+.upload-icon {
+    font-size: 48px;         /* 上传图标大小 */
+    margin-bottom: 15px;     /* 下方留白 */
+}
+
+.upload-area p {
+    color: #888;             /* 提示文字颜色：灰色 */
+    margin: 5px 0;          /* 上下留白5px */
+}
+
+.upload-area .hint {
+    font-size: 14px;         /* 提示文字小一点 */
+    color: #aaa;             /* 颜色更浅 */
+}
+
+/* ---------- 模型选择 ---------- */
+.model-selection {
+    display: grid;           /* 网格布局 */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));  /* 响应式列 */
+    gap: 15px;              /* 卡片间隔 */
+    margin: 20px 0;         /* 上下留白 */
+}
+
+.model-checkbox {
+    background: #f8f9ff;    /* 背景色：淡紫色 */
+    padding: 15px;           /* 内边距 */
+    border-radius: 8px;      /* 圆角 */
+    border: 2px solid transparent;  /* 边框：透明（默认） */
+    cursor: pointer;          /* 鼠标样式：手型 */
+    transition: all 0.3s;   /* 过渡动画 */
+}
+
+.model-checkbox:hover {
+    border-color: #667eea;  /* 鼠标悬停：边框变紫色 */
+}
+
+.model-checkbox.selected {
+    background: #e8ebff;    /* 选中时背景色变深 */
+    border-color: #667eea;  /* 边框紫色 */
+}
+
+.model-checkbox input[type="checkbox"] {
+    margin-right: 10px;     /* 复选框右侧留白 */
+}
+
+/* ---------- 进度条 ---------- */
+.progress-bar {
+    width: 100%;            /* 宽度占满 */
+    height: 20px;            /* 高度20px */
+    background: #eee;        /* 背景色：浅灰色（未完成部分） */
+    border-radius: 10px;     /* 圆角（胶囊形状） */
+    overflow: hidden;         /* 超出部分隐藏（让进度条不超出边框） */
+    margin: 15px 0;         /* 上下留白 */
+}
+
+.progress-fill {
+    height: 100%;            /* 高度占满 */
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);  /* 渐变背景（已完成部分） */
+    border-radius: 10px;     /* 圆角 */
+    transition: width 0.5s; /* 过渡动画：宽度渐变（让进度条"动"起来） */
+    width: 0%;               /* 初始宽度0%（动态修改） */
+}
+
+.progress-text {
+    text-align: center;       /* 文字居中 */
+    color: #666;             /* 文字颜色：灰色 */
+    font-size: 14px;         /* 字体大小 */
+}
+
+/* ---------- 表格（通用）---------- */
+table {
+    width: 100%;            /* 宽度占满 */
+    border-collapse: collapse;  /* 边框合并（去掉单元格之间的间隔） */
+    margin: 15px 0;         /* 上下留白 */
+}
+
+th {
+    background: #667eea;     /* 表头背景：紫色 */
+    color: white;             /* 文字颜色：白色 */
+    padding: 12px;           /* 内边距 */
+    text-align: left;         /* 文字左对齐 */
+    font-weight: 600;        /* 字体加粗 */
+}
+
+td {
+    padding: 10px 12px;     /* 单元格内边距 */
+    border-bottom: 1px solid #eee;  /* 下方边框：1px浅灰色实线（分隔行） */
+}
+
+tr:hover {
+    background: #f8f9ff;    /* 鼠标悬停行：淡紫色背景（高亮） */
+}
+
+/* ---------- 汇总统计卡片 ---------- */
+.summary-grid {
+    display: grid;           /* 网格布局 */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  /* 响应式 */
+    gap: 20px;              /* 卡片间隔 */
+}
+
+.summary-card {
+    background: #f8f9ff;    /* 背景色：淡紫色 */
+    padding: 20px;           /* 内边距 */
+    border-radius: 8px;      /* 圆角 */
+    border-left: 4px solid #667eea;  /* 左侧边框：4px紫色实线（装饰） */
+}
+
+.summary-card h4 {
+    font-size: 16px;         /* 模型名称大小 */
+    margin-bottom: 15px;     /* 下方留白 */
+    color: #667eea;         /* 文字颜色：紫色 */
+}
+
+.stat {
+    display: flex;            /* 弹性布局：横向排列 */
+    justify-content: space-between;  /* 两端对齐（标签在左，数值在右） */
+    margin: 8px 0;           /* 上下留白 */
+}
+
+.stat-label {
+    color: #888;             /* 标签颜色：灰色 */
+}
+
+.stat-value {
+    font-weight: bold;        /* 数值加粗 */
+    color: #333;             /* 文字颜色：深灰 */
+}
+
+/* ---------- 推荐结论卡片 ---------- */
+.recommendation-card {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);  /* 渐变背景：粉紫色 */
+    color: white;             /* 文字颜色：白色 */
+}
+
+.recommendation-card h3 {
+    color: white;             /* 标题颜色：白色 */
+    border-bottom-color: rgba(255,255,255,0.3);  /* 边框颜色：半透明白色 */
+}
+
+.recommendation-content {
+    font-size: 16px;         /* 字体大小 */
+    line-height: 1.8;        /* 行高（阅读舒适） */
+}
+
+/* ---------- 评分标签 ---------- */
+.score-badge {
+    display: inline-block;    /* 行内块级 */
+    padding: 4px 12px;      /* 内边距（标签大小） */
+    border-radius: 20px;     /* 圆角20px（胶囊形状） */
+    font-size: 14px;         /* 字体大小 */
+    font-weight: bold;        /* 加粗 */
+}
+
+.score-excellent {
+    background: #d4edda;     /* 优秀：绿色背景 */
+    color: #155724;          /* 文字颜色：深绿 */
+}
+
+.score-good {
+    background: #d1ecf1;     /* 良好：蓝色背景 */
+    color: #0c5460;         /* 文字颜色：深蓝 */
+}
+
+.score-ok {
+    background: #fff3cd;     /* 及格：黄色背景 */
+    color: #856404;          /* 文字颜色：深黄 */
+}
+
+.score-poor {
+    background: #f8d7da;     /* 不及格：红色背景 */
+    color: #721c24;          /* 文字颜色：深红 */
+}
+
+/* ---------- 页脚 ---------- */
+.footer {
+    text-align: center;       /* 文字居中 */
+    padding: 30px;           /* 内边距 */
+    color: #888;             /* 文字颜色：灰色 */
+    font-size: 14px;         /* 字体大小 */
+    margin-top: 60px;        /* 上方留白（与内容分隔） */
+}
+
+/* ---------- 响应式设计（手机端）---------- */
+@media (max-width: 768px) {  /* 屏幕宽度小于768px时（手机） */
+    .hero h1 {
+        font-size: 32px;     /* 标题缩小 */
+    }
+    
+    .hero {
+        padding: 40px 20px; /* 内边距缩小 */
+    }
+    
+    .work-flow {
+        flex-direction: column;  /* 工作流程：纵向排列（手机端） */
+    }
+    
+    .work-flow-arrow {
+        transform: rotate(90deg);  /* 箭头旋转90度（变成向下） */
+    }
+    
+    .navbar .container {
+        flex-direction: column;  /* 导航栏：纵向排列 */
+        gap: 10px;              /* 元素之间间隔 */
+    }
+}

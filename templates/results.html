@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评估结果 - 智选</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">智选 - AI模型选型平台</div>
+            <div class="nav-links">
+                <a href="/">首页</a>
+                <a href="/upload">上传任务</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>评估报告</h1>
+            <p id="report-meta">加载中...</p>
+        </div>
+
+        <!-- 汇总统计 -->
+        <div class="card" id="summary-section">
+            <h3>执行摘要</h3>
+            <div class="summary-grid" id="summary-grid">
+                <!-- 动态加载 -->
+            </div>
+        </div>
+
+        <!-- 推荐结论 -->
+        <div class="card recommendation-card" id="recommendation-section">
+            <h3>推荐结论</h3>
+            <div id="recommendation-content">
+                <!-- 动态加载 -->
+            </div>
+        </div>
+
+        <!-- 详细结果 -->
+        <div class="card" id="details-section">
+            <h3>详细评估结果</h3>
+            <div class="task-tabs" id="task-tabs">
+                <!-- 动态生成任务标签 -->
+            </div>
+            <div id="task-detail">
+                <!-- 动态加载任务详情 -->
+            </div>
+        </div>
+
+        <!-- 下载报告 -->
+        <div class="card download-section">
+            <h3>下载完整报告</h3>
+            <div class="download-buttons">
+                <a href="#" class="btn btn-primary" id="download-md">下载 Markdown</a>
+                <a href="#" class="btn btn-secondary" id="download-html">下载 HTML</a>
+                <a href="#" class="btn btn-secondary" id="download-pdf">下载 PDF</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 从 URL 路径获取 report_id（修复：后端跳转用的是 /results/{report_id} 路径格式）
+        // 例如：/results/report_abc123
+        let reportId = null;
+        const pathParts = window.location.pathname.split('/');
+        // pathParts = ['', 'results', 'report_xxx']
+        if (pathParts.length >= 3 && pathParts[1] === 'results') {
+            reportId = pathParts[2];
+        }
+        // 兼容旧格式：也从查询参数读取（?report_id=xxx）
+        if (!reportId || reportId === '') {
+            const urlParams = new URLSearchParams(window.location.search);
+            reportId = urlParams.get('report_id');
+        }
+
+        if (!reportId) {
+            document.getElementById('report-meta').innerText = '错误：未提供报告ID';
+        } else {
+            loadReport(reportId);
+        }
+
+        async function loadReport(reportId) {
+            try {
+                const response = await fetch(`/api/report/${reportId}`);
+                if (!response.ok) {
+                    throw new Error('报告不存在或尚未生成完成');
+                }
+                const report = await response.json();
+                renderReport(report);
+            } catch (error) {
+                document.getElementById('report-meta').innerText = '加载失败：' + error.message;
+            }
+        }
+
+        function renderReport(report) {
+            // 更新元数据
+            document.getElementById('report-meta').innerText = 
+                `报告ID: ${report.report_id} | 生成时间: ${new Date(report.created_at).toLocaleString()} | 测试任务数: ${report.total_tasks}`;
+
+            // 更新下载链接
+            document.getElementById('download-md').href = `/download/report/${report.report_id}?format=markdown`;
+            document.getElementById('download-html').href = `/download/report/${report.report_id}?format=html`;
+            document.getElementById('download-pdf').href = `/download/report/${report.report_id}?format=pdf`;
+
+            // 渲染汇总统计
+            renderSummary(report.summary_stats);
+
+            // 渲染推荐结论
+            renderRecommendation(report.recommendation);
+
+            // 渲染详细结果
+            renderDetails(report.task_results, report.models_tested);
+        }
+
+        function renderSummary(summaryStats) {
+            const grid = document.getElementById('summary-grid');
+            grid.innerHTML = '';
+
+            for (const [model, stats] of Object.entries(summaryStats)) {
+                const card = document.createElement('div');
+                card.className = 'summary-card';
+                card.innerHTML = `
+                    <h4>${model}</h4>
+                    <div class="stat">
+                        <span class="stat-label">综合得分</span>
+                        <span class="stat-value">${stats.avg_comprehensive_score.toFixed(1)}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">质量得分</span>
+                        <span class="stat-value">${stats.avg_quality_score.toFixed(1)}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">总成本</span>
+                        <span class="stat-value">$${stats.total_cost.toFixed(4)}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">平均响应</span>
+                        <span class="stat-value">${stats.avg_latency.toFixed(2)}s</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+
+        function renderRecommendation(recommendation) {
+            const content = document.getElementById('recommendation-content');
+            
+            if (!recommendation || Object.keys(recommendation).length === 0) {
+                content.innerHTML = '<p>暂无推荐结论</p>';
+                return;
+            }
+
+            let html = '<div class="recommendation-content">';
+            
+            if (recommendation.best_overall) {
+                html += `<p><strong>综合最优模型：</strong>${recommendation.best_overall}</p>`;
+            }
+            
+            if (recommendation.best_cost_effective) {
+                html += `<p><strong>性价比最高模型：</strong>${recommendation.best_cost_effective}</p>`;
+            }
+            
+            if (recommendation.reasoning) {
+                html += `<p class="reasoning"><strong>分析：</strong>${recommendation.reasoning}</p>`;
+            }
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        function renderDetails(taskResults, modelsTested) {
+            const tabsContainer = document.getElementById('task-tabs');
+            const detailContainer = document.getElementById('task-detail');
+            
+            tabsContainer.innerHTML = '';
+
+            // 创建任务标签
+            taskResults.forEach((task, index) => {
+                const tab = document.createElement('button');
+                tab.className = 'task-tab' + (index === 0 ? ' active' : '');
+                tab.innerText = `任务 ${index + 1}`;
+                tab.onclick = () => {
+                    // 移除所有 active
+                    document.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    renderTaskDetail(task, modelsTested);
+                };
+                tabsContainer.appendChild(tab);
+            });
+
+            // 默认显示第一个任务
+            if (taskResults.length > 0) {
+                renderTaskDetail(taskResults[0], modelsTested);
+            }
+        }
+
+        function renderTaskDetail(task, modelsTested) {
+            const container = document.getElementById('task-detail');
+            
+            let html = `
+                <div class="task-info">
+                    <p><strong>任务ID：</strong>${task.task_id}</p>
+                    <p><strong>任务类型：</strong>${task.task_type}</p>
+                    <p><strong>指令：</strong>${task.instruction}</p>
+                </div>
+
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>模型</th>
+                            <th>综合得分</th>
+                            <th>质量得分</th>
+                            <th>成本</th>
+                            <th>响应时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            modelsTested.forEach(model => {
+                const score = task.comprehensive_scores[model] || 0;
+                const quality = task.quality_scores[model] ? task.quality_scores[model].overall_score : 0;
+                const cost = task.responses[model] ? task.responses[model].cost : 0;
+                const latency = task.responses[model] ? task.responses[model].latency : 0;
+
+                html += `
+                    <tr>
+                        <td>${model}</td>
+                        <td class="${score >= 7 ? 'score-good' : score >= 5 ? 'score-ok' : 'score-bad'}">${score.toFixed(1)}</td>
+                        <td>${quality.toFixed(1)}</td>
+                        <td>$${cost.toFixed(6)}</td>
+                        <td>${latency.toFixed(2)}s</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+
+                <div class="responses-section">
+                    <h4>模型回复详情</h4>
+            `;
+
+            modelsTested.forEach(model => {
+                if (task.responses[model]) {
+                    html += `
+                        <details>
+                            <summary><strong>${model}</strong> 的回复</summary>
+                            <div class="response-text">
+                                <pre>${task.responses[model].output_text}</pre>
+                            </div>
+                            ${task.quality_scores[model] ? `<p class="score-reasoning"><em>评分理由：${task.quality_scores[model].reasoning}</em></p>` : ''}
+                        </details>
+                    `;
+                }
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
